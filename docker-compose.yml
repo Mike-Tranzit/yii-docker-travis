@@ -1,0 +1,17 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+      - 8080:80
+    working_dir: ${APP_PATH_CONTAINER}
+    volumes:
+      - ${APP_PATH_HOST}:${APP_PATH_CONTAINER}
+  composer:
+    image: composer:latest
+    depends_on:
+      - web
+    volumes_from:
+      - web
+    working_dir: ${APP_PATH_CONTAINER}
+    command: composer install
